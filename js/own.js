@@ -70,55 +70,33 @@ window.onload = function(){
                     oWrap.style.marginTop = wH / 2 - 180 + 'px';
                 }
 
-            //  三个鼠标事件
-            //  按下   按下后移动   提起
-
-            //  第一个
+            // 鼠标按下
             document.onmousedown = function(ev){
                 ev = ev ||window.event;
                 lastX = ev.clientX;
                 lastY = ev.clientY;
 
 
-                //第二个事件
-                //
-                //移动事件
-                // 给wrap添加transform属性
-                //需要获取的的是鼠标移动的坐标值 求差值  把差值作为rotate的值
+                // 鼠标移动
                 this.onmousemove = function(ev){
                     ev =ev||window.event;
                     nowX = ev.clientX;
                     nowY = ev.clientY;
-                    // 求差值
+                    // 求差
                     minuseX = nowX - lastX;
                     minuseY = nowY - lastY;
-                    //更新wrap的旋转角度，拖拽越快--> minus变化越大->
                     //roY变化越大  旋转越快
                     roX -= minuseY*0.1
                     roY += minuseX*0.2
-                    console.log(roX)
 
-                    // console.log("当前点X坐标"+lastX)
-                    // console.log("当前点Y坐标"+lastY)
                     oWrap.style.transform ='rotateX('+roX+'deg) rotateY('+roY+'deg)';
                     // 随着鼠标移动,当前点成前一点
                     lastX = nowX;
                     lastY = nowY;
                  }
-                 // 第三个事件  提起
+                 // 鼠标抬起
                  this.onmouseup = function(){
                     this.onmousemove = null;
-                    timer =setInterval(function(){
-                            minuseX *= 0.95; // 让差值无限次乘以一个小数  值会无限接近零 但不会等于零
-
-                            minuseY *= 0.95;
-                            roY += minuseX*0.2;
-                            roX -= minuseY*0.1;
-                            oWrap.style.transform ='rotateX('+roX+'deg)rotateY('+roY+'deg)';
-                            if(Math.abs(minuseX)<0.2&&Math.abs(minuseY)<0.1){
-                                clearInterval(timer)
-                            }
-                    },15)
                  }
                 return  false;//  取消鼠标的默认事件
             }
